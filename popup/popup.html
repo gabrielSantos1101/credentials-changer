@@ -1,55 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="popup.css">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="popup.css" />
     <title>Credentials changer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="card">
-        <div class="card-content">
-            <h3 class="card-title">General Settings</h3>
-            <p class="card-description">Customize the behavior and appearance of your extension.</p>
-            <form class="form">
-                <div class="form-group">
-                    <label class="form-label" for="name">Name</label>
-                    <input type="text" class="form-input" id="name" placeholder="Enter a name for your extension" />
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Custom Fields</label>
-                    <div class="custom-fields">
-                        <div class="custom-field">
-                            <input type="text" class="custom-field-input" placeholder="Field label" />
-                            <button class="custom-field-button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M5 12h14"></path>
-                                    <path d="M12 5v14"></path>
-                                </svg>
-                            </button>
-                            <button class="custom-field-button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M5 12h14"></path>
-                                    <path d="M12 5v14"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="button button-cancel">Cancel</button>
-                    <button type="submit" class="button button-primary">Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</body>
+      <h3 class="card-title bg-black">General Settings</h3>
+      <p class="card-description">Customize os campos de credenciais</p>
+      <form class="form">
+        <label class="form-label input-group" for="name"
+          >Name
+          <input
+            type="text"
+            class="form-input"
+            id="name"
+            placeholder="Platform name"
+          />
+        </label>
 
+        <label class="form-label input-group">
+        Custom Fields
+
+          <div class="input-field">
+            <input type="text" class="" placeholder="Field" />
+            <button class="custom-field-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14"></path>
+                <path d="M12 5v14"></path>
+              </svg>
+            </button>
+            <button class="custom-field-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14"></path>
+              </svg>
+            </button>
+          </div>
+        </label>
+
+        <div class="form-actions">
+          <button type="button" class="button button-cancel">Cancel</button>
+          <button type="submit" class="button button-primary">
+            Salvar credênciais
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
 </html>
