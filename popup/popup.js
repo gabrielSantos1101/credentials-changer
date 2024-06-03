@@ -5,18 +5,38 @@ function getCookieValue(fieldName) {
   for (const cookie of cookiesArray) {
     const [name, value] = cookie.split("=");
     if (name === fieldName) {
-      return value;
+      return decodeURIComponent(value);
     }
   }
 
   return null;
 }
 
-function addField() {
-  let randomId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+function saveFormData(event) {
+  event.preventDefault();
 
-  let label = document.createElement('label');
-  label.classList.add('form-label', 'input-group');
+  let fieldsContainer = document.getElementById("fieldsContainer");
+  let fields = fieldsContainer.querySelectorAll(".input-field input");
+  let formData = {};
+
+  fields.forEach((field) => {
+    let cookieName = field.value;
+    formData[cookieName] = getCookieValue(cookieName);
+  });
+
+  chrome.storage.local.set({ formData }, () => {
+    console.log(formData);
+    window.alert('Dados do formulário salvos com sucesso!');
+  });
+}
+
+function addField() {
+  let randomId =
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15);
+
+  let label = document.createElement("label");
+  label.classList.add("form-label", "input-group");
   label.id = randomId;
   label.innerHTML = `
     <div class="input-field">
@@ -55,20 +75,24 @@ function addField() {
     </div>
   `;
 
-  label.querySelector('.subtract-field').addEventListener('click', () => {
+  label.querySelector(".subtract-field").addEventListener("click", () => {
     label.remove();
   });
 
-  let fieldsContainer = document.getElementById('fieldsContainer');
+  let fieldsContainer = document.getElementById("fieldsContainer");
   fieldsContainer.appendChild(label);
 
   attachAddFieldEvent(label, randomId);
 }
 
 function attachAddFieldEvent(label, randomId) {
-  label.querySelector(`#addField-${randomId}`).addEventListener('click', addField);
+  label
+    .querySelector(`#addField-${randomId}`)
+    .addEventListener("click", addField);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   addField();
+  const form = document.getElementById("form");
+  form.addEventListener("submit", saveFormData);
 });
