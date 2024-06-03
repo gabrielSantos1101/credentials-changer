@@ -62,6 +62,10 @@ function addField() {
   let fieldsContainer = document.getElementById('fieldsContainer');
   fieldsContainer.appendChild(label);
 
+  attachAddFieldEvent(label, randomId);
+}
+
+function attachAddFieldEvent(label, randomId) {
   label.querySelector(`#addField-${randomId}`).addEventListener('click', addField);
 }
 
