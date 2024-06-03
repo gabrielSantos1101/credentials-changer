@@ -10,7 +10,7 @@
     },
     "options_page": "settings/settings.html",
     "action": {
-        "default_title": "Chrome Addon v3 Starter",
+        "default_title": "Credentials changer",
         "default_popup": "popup/popup.html"
     },
     "permissions": [],

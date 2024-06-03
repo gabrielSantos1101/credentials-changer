@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="popup.css" />
     <title>Credentials changer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="popup.js" defer></script>
   </head>
 
   <body>
@@ -13,8 +13,8 @@
       <h3 class="card-title bg-black">General Settings</h3>
       <p class="card-description">Customize os campos de credenciais</p>
       <form class="form">
-        <label class="form-label input-group" for="name"
-          >Name
+        <label class="form-label input-group" for="name">
+          Name
           <input
             type="text"
             class="form-input"
@@ -23,44 +23,8 @@
           />
         </label>
 
-        <label class="form-label input-group">
-        Custom Fields
-
-          <div class="input-field">
-            <input type="text" class="" placeholder="Field" />
-            <button class="custom-field-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M5 12h14"></path>
-                <path d="M12 5v14"></path>
-              </svg>
-            </button>
-            <button class="custom-field-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M5 12h14"></path>
-              </svg>
-            </button>
+        <div id="fieldsContainer">
           </div>
-        </label>
 
         <div class="form-actions">
           <button type="button" class="button button-cancel">Cancel</button>
