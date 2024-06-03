@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Chrome Extension v3 Starter",
+    "name": "Credentials changer",
     "description": "A minimal example of a chrome extension using manifest v3",
     "version": "0.0.1",
     "icons": {
