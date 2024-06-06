@@ -16,19 +16,19 @@ function getCookieValue(fieldName) {
 
 function saveFormData(event) {
   event.preventDefault();
-
-  let fieldsContainer = document.getElementById("fieldsContainer");
-  let platform = document.getElementById("name").value;
-  let fields = fieldsContainer.querySelectorAll(".input-field input");
-
-  let formData = {
-    platform: platform
-  };
-
-  fields.forEach((field) => {
-    let cookieName = field.value;
-    formData[cookieName] = getCookieValue(cookieName);
+  const platform = document.getElementById("name").value;
+  const fieldValues = Array.from(
+    document.querySelectorAll(".input-field input")
+  ).map((field) => {
+    const cookieName = field.value;
+    const cookieValue = getCookieValue(cookieName);
+    return { name: cookieName, value: cookieValue };
   });
+
+  const formData = {
+    platform,
+    fieldValues,
+  };
   console.log(formData);
 }
 
@@ -96,4 +96,5 @@ function attachAddFieldEvent(label, randomId) {
 document.addEventListener("DOMContentLoaded", () => {
   addField();
 });
+
 form.addEventListener("submit", saveFormData);
