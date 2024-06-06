@@ -13,15 +13,8 @@
         "default_title": "Credentials changer",
         "default_popup": "popup/popup.html"
     },
-    "permissions": [],
-    "host_permissions": [
-        "*://*/*"
-    ],
+    "permissions": ["cookies", "activeTab"],
     "background": {
         "service_worker": "service-worker.js"
-    },
-    "content_scripts": [{
-        "js": ["background.js"],
-        "matches": ["https://github.com/*"]
-    }]
+    }
 }
