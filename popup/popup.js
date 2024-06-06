@@ -1,3 +1,5 @@
+const form = document.getElementById("form");
+
 function getCookieValue(fieldName) {
   const cookiesString = document.cookie;
   const cookiesArray = cookiesString.split("; ");
@@ -16,18 +18,18 @@ function saveFormData(event) {
   event.preventDefault();
 
   let fieldsContainer = document.getElementById("fieldsContainer");
+  let platform = document.getElementById("name").value;
   let fields = fieldsContainer.querySelectorAll(".input-field input");
-  let formData = {};
+
+  let formData = {
+    platform: platform
+  };
 
   fields.forEach((field) => {
     let cookieName = field.value;
     formData[cookieName] = getCookieValue(cookieName);
   });
-
-  chrome.storage.local.set({ formData }, () => {
-    console.log(formData);
-    window.alert('Dados do formulário salvos com sucesso!');
-  });
+  console.log(formData);
 }
 
 function addField() {
@@ -93,6 +95,5 @@ function attachAddFieldEvent(label, randomId) {
 
 document.addEventListener("DOMContentLoaded", () => {
   addField();
-  const form = document.getElementById("form");
-  form.addEventListener("submit", saveFormData);
 });
+form.addEventListener("submit", saveFormData);
