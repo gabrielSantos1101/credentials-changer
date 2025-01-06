@@ -50,7 +50,7 @@ Contributions are welcome! To contribute, follow these steps:
 
 ### License
 
-[Specify the license used, e.g., MIT]
+MIT
 
 ### Acknowledgments
 
