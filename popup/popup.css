@@ -1,11 +1,13 @@
 :root {
   --text-color: #f1f5f9;
+  --text-muted: #94a3b8;
   --primary-color: #007bff;
 
   --border-color: #475569;
 
   --bg-primary: #020617;
   --bg-secondary: #0f172a;
+  --bg-hover: #1e293b;
 
   --border-radius: 4px;
 }
@@ -19,66 +21,102 @@
 body {
   background-color: var(--bg-primary);
   color: var(--text-color);
-
-  width: max-content;
-  height: max-content;
+  width: 320px;
+  font-size: 14px;
 }
 
 button {
   cursor: pointer;
 }
 
+/* --- Tabs --- */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab-btn:hover {
+  color: var(--text-color);
+  background: var(--bg-hover);
+}
+
+.tab-btn.active {
+  color: var(--text-color);
+  border-bottom-color: var(--primary-color);
+}
+
+/* --- Tab content --- */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* --- Card --- */
 .card {
   background-color: var(--bg-secondary);
-  border: 1px solid #616b65;
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 16px;
-  margin: 12px;
 }
 
-.form-label {
-  display: block;
-  margin-bottom: 4px;
-  font-weight: bold;
+.card-description {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
 }
 
-.input-group {
-  display: grid;
-  gap: 4px;
-
-  & input {
-    width: 100%;
-    height: fit-content;
-
-    padding: 8px;
-
-    border-radius: var(--border-radius);
-    border: none;
-  }
-
-  & button {
-    display: grid;
-    place-items: center;
-    background: transparent;
-    border: none;
-    color: var(--text-color);
-
-    width: auto;
-    height: inherit;
-    aspect-ratio: 1/1;
-
-    &:hover {
-      background: #424242;
-      border-radius: var(--border-radius);
-    }
-  }
-}
-
+/* --- Form --- */
 form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+}
+
+.form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-input {
+  width: 100%;
+  padding: 7px 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  font-size: 13px;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--primary-color);
+}
+
+/* --- Field rows (input-group) --- */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .input-field {
@@ -87,39 +125,132 @@ form {
   gap: 4px;
 }
 
-.form-input {
+.input-field input {
+  flex: 1;
+  padding: 7px 8px;
+  background: var(--bg-primary);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
+  color: var(--text-color);
+  font-size: 13px;
+  outline: none;
 }
 
+.input-field input:focus {
+  border-color: var(--primary-color);
+}
+
+.custom-field-button {
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-muted);
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.custom-field-button:hover {
+  background: var(--bg-hover);
+  color: var(--text-color);
+}
+
+/* --- Form actions --- */
 .form-actions {
   display: flex;
   justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 .button {
-  display: inline-block;
-  padding: 8px 16px;
-  border: 1px solid var(--border-color);
+  padding: 7px 14px;
   border-radius: var(--border-radius);
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
+  border: 1px solid var(--border-color);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .button-cancel {
   background-color: transparent;
-  border: 1px solid var(--border-color);
   color: var(--text-color);
+}
 
-  &:hover {
-    background-color: #424242;
-  }
+.button-cancel:hover:not(:disabled) {
+  background-color: var(--bg-hover);
 }
 
 .button-primary {
   background-color: var(--primary-color);
-  color: var(--text-color);
+  border-color: var(--primary-color);
+  color: #fff;
+}
 
-  &:hover {
-    filter: brightness(1.1);
-  }
+.button-primary:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+/* --- Credentials list (Tab 2) --- */
+.credential-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.credential-item:last-child {
+  border-bottom: none;
+}
+
+.credential-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.credential-name {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.credential-domain {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.credential-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.credential-actions .button {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+/* --- Empty state --- */
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 24px 0;
 }

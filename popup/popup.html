@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="popup.css" />
@@ -9,30 +9,37 @@
   </head>
 
   <body>
-    <div class="card">
-      <h3 class="card-title bg-black">General Settings</h3>
-      <p class="card-description">Customize os campos de credenciais</p>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="capture">Capturar</button>
+      <button class="tab-btn" data-tab="apply">Aplicar</button>
+    </div>
+
+    <div id="tab-capture" class="tab-content active card">
+      <p class="card-description">Salva os cookies da aba atual</p>
       <form id="form">
-        <label class="form-label input-group" for="name">
-          Name
+        <label class="form-label" for="name">
+          Plataforma
           <input
             type="text"
             class="form-input"
             id="name"
-            placeholder="Platform name"
+            placeholder="Ex: Produção, Staging..."
           />
         </label>
 
-        <div id="fieldsContainer">
-          </div>
+        <div id="fieldsContainer"></div>
 
         <div class="form-actions">
-          <button type="button" class="button button-cancel">Cancel</button>
-          <button type="submit" class="button button-primary">
-            Salvar credênciais
-          </button>
+          <button type="button" class="button button-cancel" id="cancelBtn">Limpar</button>
+          <button type="submit" class="button button-primary" id="saveBtn">Salvar</button>
         </div>
       </form>
+    </div>
+
+    <div id="tab-apply" class="tab-content card">
+      <p class="card-description">Cole cookies na aba atual</p>
+      <div id="credentialsList"></div>
+      <p id="emptyState" class="empty-state">Nenhuma credencial salva ainda.</p>
     </div>
   </body>
 </html>

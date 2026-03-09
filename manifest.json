@@ -13,7 +13,8 @@
         "default_title": "Credentials changer",
         "default_popup": "popup/popup.html"
     },
-    "permissions": ["cookies", "activeTab"],
+    "permissions": ["cookies", "activeTab", "storage"],
+    "host_permissions": ["<all_urls>"],
     "background": {
         "service_worker": "service-worker.js"
     }
