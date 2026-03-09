@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Credentials changer",
-    "description": "Easily capture cookies from any tab and paste them into another — perfect for switching between environments like production and localhost.",
+    "description": "Capture cookies from any tab and apply them to another — ideal for switching between environments like production and localhost.",
     "version": "1.0.0",
     "icons": {
         "16": "logo/logo-16.png",
