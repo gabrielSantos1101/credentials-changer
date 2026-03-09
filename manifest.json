@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Credentials changer",
-    "description": "A minimal example of a chrome extension using manifest v3",
+    "description": "Easily capture cookies from any tab and paste them into another — perfect for switching between environments like production and localhost.",
     "version": "0.0.1",
     "icons": {
         "16": "logo/logo-16.png",

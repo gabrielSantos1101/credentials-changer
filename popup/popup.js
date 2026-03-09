@@ -28,13 +28,13 @@ function addField(name = "") {
   label.id = randomId;
   label.innerHTML = `
     <div class="input-field">
-      <input type="text" placeholder="Nome do cookie (ex: token)" value="${name}" />
-      <button class="custom-field-button add-field" type="button" title="Adicionar campo">
+      <input type="text" placeholder="Cookie name (e.g. token)" value="${name}" />
+      <button class="custom-field-button add-field" type="button" title="Add field">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14"></path><path d="M12 5v14"></path>
         </svg>
       </button>
-      <button class="custom-field-button subtract-field" type="button" title="Remover campo">
+      <button class="custom-field-button subtract-field" type="button" title="Remove field">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14"></path>
         </svg>
@@ -63,16 +63,16 @@ function saveFormData(event) {
   saveFieldNames();
 
   const saveBtn = document.getElementById("saveBtn");
-  saveBtn.textContent = "Salvando...";
+  saveBtn.textContent = "Saving...";
   saveBtn.disabled = true;
 
   chrome.runtime.sendMessage(
     { action: "getCookieValues", cookieNames: fieldNames, platform },
     (response) => {
       if (!response) {
-        saveBtn.textContent = "Erro";
+        saveBtn.textContent = "Error";
         setTimeout(() => {
-          saveBtn.textContent = "Salvar";
+          saveBtn.textContent = "Save";
           saveBtn.disabled = false;
         }, 1500);
         return;
@@ -84,9 +84,9 @@ function saveFormData(event) {
           cookies: response.cookies,
         };
         chrome.storage.local.set({ credentials }, () => {
-          saveBtn.textContent = "Salvo!";
+          saveBtn.textContent = "Saved!";
           setTimeout(() => {
-            saveBtn.textContent = "Salvar";
+            saveBtn.textContent = "Save";
             saveBtn.disabled = false;
           }, 1500);
         });
@@ -118,21 +118,21 @@ function renderCredentials() {
           <span class="credential-domain">${data.domain || ""}</span>
         </div>
         <div class="credential-actions">
-          <button class="button button-primary apply-btn" type="button">Aplicar</button>
+          <button class="button button-primary apply-btn" type="button">Apply</button>
           <button class="button button-cancel delete-btn" type="button">×</button>
         </div>
       `;
 
       item.querySelector(".apply-btn").addEventListener("click", () => {
         const applyBtn = item.querySelector(".apply-btn");
-        applyBtn.textContent = "Aplicando...";
+        applyBtn.textContent = "Applying...";
         applyBtn.disabled = true;
         chrome.runtime.sendMessage(
           { action: "setCookies", cookies: data.cookies },
           (response) => {
-            applyBtn.textContent = response?.success ? "Aplicado!" : "Erro";
+            applyBtn.textContent = response?.success ? "Applied!" : "Error";
             setTimeout(() => {
-              applyBtn.textContent = "Aplicar";
+              applyBtn.textContent = "Apply";
               applyBtn.disabled = false;
             }, 1500);
           }
