@@ -29,6 +29,66 @@ button {
   cursor: pointer;
 }
 
+/* --- Extension header --- */
+.extension-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* --- Mode toggle --- */
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.mode-toggle input {
+  display: none;
+}
+
+.toggle-track {
+  position: relative;
+  width: 30px;
+  height: 17px;
+  background: var(--border-color);
+  border-radius: 9px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.mode-toggle input:checked + .toggle-track {
+  background: var(--primary-color);
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 13px;
+  height: 13px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.mode-toggle input:checked + .toggle-track .toggle-thumb {
+  transform: translateX(13px);
+}
+
+.toggle-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 /* --- Tabs --- */
 .tabs {
   display: flex;
@@ -196,6 +256,21 @@ form {
 
 .button-primary:hover:not(:disabled) {
   filter: brightness(1.15);
+}
+
+.button-secondary {
+  background-color: transparent;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.button-secondary:hover:not(:disabled) {
+  background-color: var(--bg-hover);
+}
+
+.button-secondary:disabled {
+  border-color: var(--border-color);
+  color: var(--text-muted);
 }
 
 /* --- Credentials list (Tab 2) --- */

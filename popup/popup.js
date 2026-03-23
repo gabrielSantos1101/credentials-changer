@@ -1,6 +1,9 @@
 const form = document.getElementById("form");
 const fieldsContainer = document.getElementById("fieldsContainer");
 
+let isSimplifiedMode = false;
+
+// --- Tab switching (normal mode) ---
 document.querySelectorAll(".tab-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
@@ -11,6 +14,42 @@ document.querySelectorAll(".tab-btn").forEach((btn) => {
   });
 });
 
+// --- Simplified mode toggle ---
+function applySimplifiedMode(simplified) {
+  isSimplifiedMode = simplified;
+
+  const normalTabs = document.getElementById("normalTabs");
+  const tabApply = document.getElementById("tab-apply");
+  const platformLabel = document.getElementById("platformLabel");
+  const normalActions = document.getElementById("normalActions");
+  const simplifiedActions = document.getElementById("simplifiedActions");
+
+  if (simplified) {
+    normalTabs.style.display = "none";
+    tabApply.classList.remove("active");
+    document.getElementById("tab-capture").classList.add("active");
+    platformLabel.style.display = "none";
+    normalActions.style.display = "none";
+    simplifiedActions.style.display = "flex";
+
+    chrome.storage.local.get(["simplifiedData"], ({ simplifiedData }) => {
+      document.getElementById("simplifiedApplyBtn").disabled = !simplifiedData;
+    });
+  } else {
+    normalTabs.style.display = "flex";
+    platformLabel.style.display = "flex";
+    normalActions.style.display = "flex";
+    simplifiedActions.style.display = "none";
+  }
+}
+
+document.getElementById("simplifiedToggle").addEventListener("change", (e) => {
+  const simplified = e.target.checked;
+  chrome.storage.local.set({ simplifiedMode: simplified });
+  applySimplifiedMode(simplified);
+});
+
+// --- Fields ---
 function getFieldNames() {
   return Array.from(fieldsContainer.querySelectorAll("input"))
     .map((i) => i.value.trim())
@@ -52,8 +91,15 @@ function addField(name = "") {
   fieldsContainer.appendChild(label);
 }
 
+// --- Save (normal mode) ---
 function saveFormData(event) {
   event.preventDefault();
+
+  if (isSimplifiedMode) {
+    saveSimplifiedData();
+    return;
+  }
+
   const platform = document.getElementById("name").value.trim();
   if (!platform) return;
 
@@ -95,6 +141,74 @@ function saveFormData(event) {
   );
 }
 
+// --- Save (simplified mode) ---
+function saveSimplifiedData() {
+  const fieldNames = getFieldNames();
+  if (!fieldNames.length) return;
+
+  saveFieldNames();
+
+  const saveBtn = document.getElementById("simplifiedSaveBtn");
+  saveBtn.textContent = "Saving...";
+  saveBtn.disabled = true;
+
+  chrome.runtime.sendMessage(
+    { action: "getCookieValues", cookieNames: fieldNames, platform: "simplified" },
+    (response) => {
+      if (!response) {
+        saveBtn.textContent = "Error";
+        setTimeout(() => {
+          saveBtn.textContent = "Save";
+          saveBtn.disabled = false;
+        }, 1500);
+        return;
+      }
+
+      chrome.storage.local.set(
+        { simplifiedData: { domain: response.url, cookies: response.cookies } },
+        () => {
+          saveBtn.textContent = "Saved!";
+          document.getElementById("simplifiedApplyBtn").disabled = false;
+          setTimeout(() => {
+            saveBtn.textContent = "Save";
+            saveBtn.disabled = false;
+          }, 1500);
+        }
+      );
+    }
+  );
+}
+
+// --- Apply (simplified mode) ---
+document.getElementById("simplifiedApplyBtn").addEventListener("click", () => {
+  const applyBtn = document.getElementById("simplifiedApplyBtn");
+  applyBtn.textContent = "Applying...";
+  applyBtn.disabled = true;
+
+  chrome.storage.local.get(["simplifiedData"], ({ simplifiedData }) => {
+    if (!simplifiedData) {
+      applyBtn.textContent = "No data";
+      setTimeout(() => {
+        applyBtn.textContent = "Apply";
+        applyBtn.disabled = false;
+      }, 1500);
+      return;
+    }
+
+    chrome.runtime.sendMessage(
+      { action: "setCookies", cookies: simplifiedData.cookies },
+      (response) => {
+        applyBtn.textContent = response?.success ? "Applied!" : "Error";
+        setTimeout(() => {
+          applyBtn.textContent = "Apply";
+          applyBtn.disabled = false;
+        }, 1500);
+      }
+    );
+  });
+});
+
+// --- Render credentials (normal mode apply tab) ---
 function renderCredentials() {
   const list = document.getElementById("credentialsList");
   const empty = document.getElementById("emptyState");
@@ -154,12 +268,18 @@ function renderCredentials() {
   });
 }
 
+// --- Init ---
 document.addEventListener("DOMContentLoaded", () => {
-  chrome.storage.local.get(["fieldNames"], ({ fieldNames }) => {
+  chrome.storage.local.get(["fieldNames", "simplifiedMode"], ({ fieldNames, simplifiedMode }) => {
     if (fieldNames?.length) {
       fieldNames.forEach((name) => addField(name));
     } else {
       addField();
+    }
+
+    if (simplifiedMode) {
+      document.getElementById("simplifiedToggle").checked = true;
+      applySimplifiedMode(true);
     }
   });
 });

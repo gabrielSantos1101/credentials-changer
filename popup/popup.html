@@ -9,7 +9,17 @@
   </head>
 
   <body>
-    <div class="tabs">
+    <div class="extension-header">
+      <label class="mode-toggle" title="Simplified mode">
+        <input type="checkbox" id="simplifiedToggle" />
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+        <span class="toggle-label">Simple</span>
+      </label>
+    </div>
+
+    <div class="tabs" id="normalTabs">
       <button class="tab-btn active" data-tab="capture">Capture</button>
       <button class="tab-btn" data-tab="apply">Apply</button>
     </div>
@@ -17,7 +27,7 @@
     <div id="tab-capture" class="tab-content active card">
       <p class="card-description">Save cookies from the current tab</p>
       <form id="form">
-        <label class="form-label" for="name">
+        <label class="form-label" id="platformLabel" for="name">
           Platform
           <input
             type="text"
@@ -29,9 +39,14 @@
 
         <div id="fieldsContainer"></div>
 
-        <div class="form-actions">
+        <div class="form-actions" id="normalActions">
           <button type="button" class="button button-cancel" id="cancelBtn">Clear</button>
           <button type="submit" class="button button-primary" id="saveBtn">Save</button>
+        </div>
+
+        <div class="form-actions" id="simplifiedActions" style="display:none">
+          <button type="submit" class="button button-primary" id="simplifiedSaveBtn">Save</button>
+          <button type="button" class="button button-secondary" id="simplifiedApplyBtn" disabled>Apply</button>
         </div>
       </form>
     </div>
